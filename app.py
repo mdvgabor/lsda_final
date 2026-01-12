@@ -182,8 +182,6 @@ st.title("California Housing – Dashboard + Price Predictor")
 with st.sidebar:
     st.header("Settings")
 
-    # (REMOVED) Plot sample size feature
-
     show_raw = st.checkbox("Show raw data table", value=False)
 
     st.subheader("Map settings")
@@ -219,13 +217,10 @@ if show_raw:
 st.divider()
 
 
-# Prepare sample + predictions for plots
 st.header("Exploratory Plots + Predictions")
 
-# Always cap plots at 500 rows (no sidebar control)
 plot_df = df.sample(n=min(500, len(df)), random_state=42).copy()
 
-# Add predictions for hover residuals
 X_plot = plot_df.drop(columns=["median_house_value"])
 plot_df["predicted_price"] = pipeline.predict(X_plot)
 plot_df["actual_price"] = plot_df["median_house_value"]
